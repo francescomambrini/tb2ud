@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<treebank xmlns:saxon="http://saxon.sf.net/"
+          xml:lang="grc"
+          version="1.5"
+          direction="ltr"
+          format="aldt">
+   <annotator>
+      <short>FrancescoM</short>
+      <name>Francesco Mambrini</name>
+      <address>f.mambrini@gmail.com</address>
+      <uri>http://data.perseus.org/sosol/users/FrancescoM</uri>
+  </annotator>
+    <sentence id="1" document_id="urn:cts:greekLit:tlg0011.tlg005.daphne_tb-grc1" subdoc="4-5">
+      <word id="1" form="τὸ" lemma="ὁ" postag="l-s---nn-" cite="4" head="3" relation="ATR"/>
+      <word id="2" form="γὰρ" lemma="γάρ" postag="d--------" cite="4" head="14" relation="AuxY"/>
+      <word id="3" form="παλαιὸν" lemma="παλαιός" postag="a-s---nn-" cite="4" head="4" relation="ATR"/>
+      <word id="4" form="Ἄργος" lemma="Ἄργος" postag="n-s---nn-" cite="4" head="7" relation="PNOM_AP"/>
+      <word id="5" form="οὑπόθεις" lemma="ποθέω" postag="v2siia---" cite="4" head="4" relation="ATR"/>
+      <word id="6" form="τόδε" lemma="ὅδε" postag="p-s---nn-" cite="4" head="14" relation="SBJ"/>
+      <word id="7" form="," lemma="," postag="u--------" cite="4" head="14" relation="APOS"/>
+      <word id="8" form="τῆς" lemma="ὁ" postag="l-s---fg-" cite="5" head="9" relation="ATR"/>
+      <word id="9" form="οἰστροπλῆγος" lemma="οἰστροπλήξ" postag="n-s---fg-" cite="5" head="12" relation="ATR"/>
+      <word id="10" form="ἄλσος" lemma="ἄλσος" postag="n-s---nn-" cite="5" head="7" relation="PNOM_AP"/>
+      <word id="11" form="Ἰνάχου" lemma="Ἴναχος" postag="n-s---mg-" cite="5" head="12" relation="ATR"/>
+      <word id="12" form="κόρης" lemma="κόρη" postag="n-s---fg-" cite="5" head="10" relation="ATR"/>
+      <word id="13" form="·" lemma="·" postag="u--------" cite="5" head="0" relation="AuxK"/>
+      <word id="14" form="[0]" insertion_id="0013e" artificial="elliptic" head="0" relation="PRED"/>
+   </sentence>
+
+</treebank>
