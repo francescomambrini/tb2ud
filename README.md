@@ -12,8 +12,11 @@ compatible with:
 
 * Python 3.6+
 * the package `udapy-python`, with some additional scripts to work with the formats 
-of Perseus AGLDT; you can use [my fork](https://github.com/francescomambrini/udapi-python) 
+of Perseus AGLDT; you must use the `agdt` branch in [my fork](https://github.com/francescomambrini/udapi-python) 
 of that project, which already includes all the modules to work with those files.
+
+*NEW*: The `agdt` branch of `udapi` should be automatically installed if you install 
+everything from the `requirements.txt` (see below on how to set up a virtual environment).
 
 **Important**: don't forget to add 2 folders to your `$PYTHONPATH`: `tb2UD` and 
 `tb2UD/tb2ud`; for instance, you can do that by:
@@ -21,7 +24,6 @@ of that project, which already includes all the modules to work with those files
 ```bash
 cd /path/to/tb2UD/
 export PYTHONPATH="$(pwd):$(pwd)/tb2ud/"
-
 ```
 Or, even better, create and configure a 
 [virtual environment](https://docs.python.org/3.6/tutorial/venv.html) 
@@ -40,10 +42,10 @@ know how do it.
 2. install the required packages:
 
 ```bash
-pip install requirements.txt 
+pip install -r requirements.txt 
 ```
 
-3. create a `pth` file and enter the full path to the fork of `udapi-python`, the `tb2UD` and
+3. create a `pth` file and enter the full path to the `tb2UD` and
 `tb2UD/tb2ud` folders; see [here](https://stackoverflow.com/a/10739838).
 
 ## How to use it
@@ -56,7 +58,6 @@ You can test that everything is working fine by running the following script:
 ```bash
 # test.sh <input-file.xml>
 ./test.sh data/hdt-1-20-39-bu2.xml 
-
 ```
 
 (note that the script attempts to read an AGLDT XML file; it fails if the 
