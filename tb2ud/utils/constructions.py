@@ -24,6 +24,7 @@ def is_conj_with_elided_subtree(subroot):
     else:
         return False
 
+
 def is_coord_subtree(subroot):
     """
     Analyze a subtree rooted in `subroot`. If the head of a tree has the misc['original_dep'] set
@@ -38,6 +39,7 @@ def is_coord_subtree(subroot):
     else:
         return False
 
+
 def is_apos_subtree(subroot):
     """
     Analyze a subtree rooted in `subroot`. If the head of a tree has the misc['original_dep'] set
@@ -51,6 +53,7 @@ def is_apos_subtree(subroot):
         return True
     else:
         return False
+
 
 def is_copula_subtree(subroot):
     """

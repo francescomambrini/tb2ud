@@ -31,6 +31,20 @@ class SubTreeConverter(Block):
 
     """
 
+    def __init__(self, with_enhanced=False):
+        """
+        Rehang constructions and either preserves the artificial nodes with enhanced deps or not
+
+        Parameters
+        ----------
+        with_enhanced : bool
+            if true, artificial nodes are introduced and their dependencies are recorded in the enhanced deps
+            (default=False)
+
+        """
+        self._with_enhanced = with_enhanced
+        super().__init__()
+
     @staticmethod
     def redraw_subtree(new_head, current_head):
         subhead = current_head.parent
@@ -144,6 +158,7 @@ class SubTreeConverter(Block):
                         subtree.remove(children="warn")
                     else:
                         subtree.parent = first
+                        subtree.deprel = 'punct' if subtree.upos == 'PUNCT' else subtree.deprel
 
             elif is_copula_subtree(subtree):
                 try:
@@ -170,6 +185,28 @@ class SubTreeConverter(Block):
 
             elif is_ellipsis_subtree(subtree):
                 chs = subtree.children
+                original_head = subtree.parent
+
+                if self._with_enhanced:
+                    # TODO: if Artificial has lemma and morph, they should be replicated
+                    # first we shift the artificial before the whole subtree
+                    subtree.shift_before_subtree(subtree)
+                    o = float(subtree.prev_node.ord)
+                    # Now we create an empty node, and we calculate the new ord based on the right node
+                    intid, dec = str(o).split(".")
+                    empty = tree.create_empty_child()
+                    # we set the morph properties of the empty node, if any
+                    empty.upos = subtree.upos if subtree.upos else '_'
+                    empty.lemma = subtree.lemma if subtree.lemma else '_'
+                    empty.xpos = empty.xpos if empty.xpos else '_'
+                    # ord and form
+                    empty.ord = float(f'{intid}.{int(dec)+1}')
+                    empty.form = f'E{empty.ord}'
+                    logging.debug(f'Creating empty node at {tree.address()} {empty.form}')
+                    # Now the dependencies of the empty nodes...
+                    for c in chs:
+                        c.deps.append({'parent': empty, 'deprel': c.deprel})
+                        logging.warning(f'Deprel for nodes is: {c.raw_deps}')
 
                 # now we seek for a node to promote
                 # order: nsubj > obj > iobj > obl > advmod > csubj > xcomp > ccomp > advcl > dislocated > vocative
@@ -181,3 +218,5 @@ class SubTreeConverter(Block):
                     self.redraw_subtree(newhead, subtree)
                 else:
                     logging.error(f'Could not find candidates for promotion for {subtree.address()}')
+
+                subtree.remove(children="warn")

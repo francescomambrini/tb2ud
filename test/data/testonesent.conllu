@@ -6,7 +6,7 @@
 4	Ἄργος	Ἄργος	PROPN	n-s---nn-	Case=Nom|Gender=Neut|Number=Sing	0	root	_	AposMember|original_dep=PNOM|Ref=4
 5	οὑπόθεις	ποθέω	VERB	v2siia---	Mood=Ind|Number=Sing|Person=2|Tense=Imp|Voice=Act	4	acl:relcl	_	original_dep=ATR|Ref=4
 6	τόδε	ὅδε	DET	p-s---nn-	Case=Nom|Gender=Neut|Number=Sing|PronType=Dem	4	nsubj	_	original_dep=SBJ|Ref=4|SpaceAfter=No
-7	,	,	PUNCT	u--------	_	4	dep:apos	_	original_dep=APOS|Ref=4
+7	,	,	PUNCT	u--------	_	4	punct	_	original_dep=APOS|Ref=4
 8	τῆς	ὁ	DET	l-s---fg-	Case=Gen|Definite=Def|Gender=Fem|Number=Sing|PronType=Art	9	det	_	original_dep=ATR|Ref=5
 9	οἰστροπλῆγος	οἰστροπλήξ	NOUN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	12	nmod	_	original_dep=ATR|Ref=5
 10	ἄλσος	ἄλσος	NOUN	n-s---nn-	Case=Nom|Gender=Neut|Number=Sing	4	apos	_	AposMember|original_dep=PNOM|Ref=5

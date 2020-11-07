@@ -16,5 +16,6 @@ from udapi.core.block import Block
 
 class FixObj(Block):
 
-    def process_node(node):
+    def process_node(self, node):
+        # TODO: postprocess the different constructions tagged as OBJ
         pass

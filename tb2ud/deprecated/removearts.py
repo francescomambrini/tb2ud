@@ -1,5 +1,6 @@
 from udapi.core.block import Block
 
+
 class RemoveArts(Block):
     """
     An Artificial Node that does not govern anything is a useless node.
