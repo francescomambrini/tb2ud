@@ -198,7 +198,11 @@ class SubTreeConverter(Block):
                     # we set the morph properties of the empty node, if any
                     empty.upos = subtree.upos if subtree.upos else '_'
                     empty.lemma = subtree.lemma if subtree.lemma else '_'
-                    empty.xpos = empty.xpos if empty.xpos else '_'
+                    empty.xpos = empty.xpos if subtree.xpos else '_'
+                    # we also set the important misc values
+                    empty.misc = { 'original_dep' : subtree.misc.get('original_dep'),
+                        'AposMember' : subtree.misc.get('AposMember'),
+                        'CoordMember' : subtree.misc.get('CoordMember')}
                     # ord and form
                     empty.ord = float(f'{intid}.{int(dec)+1}')
                     empty.form = f'E{empty.ord}'
