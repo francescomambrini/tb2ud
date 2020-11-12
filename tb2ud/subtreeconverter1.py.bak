@@ -166,7 +166,8 @@ class SubTreeConverter(Block):
                           'AposMember': art.misc.get('AposMember'),
                           'CoordMember': art.misc.get('CoordMember'),
                           'art_deps': art.misc.get('art_deps'),
-                          'original_ord': str(art.misc['original_ord'])}
+                          'original_ord': str(art.misc['original_ord'])
+                          }
 
             # and the deps
             # empty.deps.append({'parent': art.parent, 'deprel': art.deprel})
@@ -178,17 +179,25 @@ class SubTreeConverter(Block):
             #             d['parent'] = empty
 
             # now we clean house, we get rid of the copied artificial
-            art.remove(children='rehang')
+            # art.remove(children='rehang')
 
     #         self.delete_deps_to_art(art, tree, warning=True)
 
     def process_tree(self, tree):
+        # first, we create a carbon copy of all the dep triplets:
+        # in the form: head_ord,rel,dep_ord
+        # we also record the original ord number of every node in misc['original_ord']
+        original_deps = [('0', n.deprel, str(n.ord),) for n in tree.children]
+        for n in tree.descendants:
+            n.misc['original_ord'] = str(n.ord)
+            original_deps.append((str(n.parent.ord), n.deprel, str(n.ord)))
+
         subtrees = get_subtree_depth(tree)
-        arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
-        if self._with_enhanced:
-            self.write_deps_in_misc(tree)
-            for a in arts:
-                a.misc['original_ord'] = str(a.ord)
+        # arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
+        # if self._with_enhanced:
+        #     self.write_deps_in_misc(tree)
+        #     for a in arts:
+        #         a.misc['original_ord'] = str(a.ord)
 
         # the logic that goes here: we have to consider the type of relation
         # between this subtree and its head and within the subtree itself.
@@ -293,16 +302,7 @@ class SubTreeConverter(Block):
 
             elif is_ellipsis_subtree(subtree):
                 chs = subtree.children
-                # original_head = subtree.parent
 
-                # if self._with_enhanced:
-                #     # original_head.deps.append({'parent': subtree, 'deprel': subtree.deprel})
-                #     subtree.deps.append({'parent': original_head, 'deprel': subtree.deprel})
-                #     for c in chs:
-                #         c.deps.append({'parent': subtree, 'deprel': c.deprel})
-                    # # TODO: enhanced deps of empty n are still not restructured (if art node depends on conj, so does the enh dep)
-
-                # now we seek for a node to promote
                 # order: nsubj > obj > iobj > obl > advmod > csubj > xcomp > ccomp > advcl > dislocated > vocative
                 order_list = ['nsubj', 'obj', 'iobj', 'obl', 'advmod', 'csubj', 'xcomp', 'ccomp', 'advcl', 'dislocated',
                               'vocative', 'nmod']
@@ -317,31 +317,34 @@ class SubTreeConverter(Block):
             remaining_arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
             # logging.debug(f'There are {len(remaining_arts)} arts in sentence {tree.address()}')
             self.copy_to_empty(remaining_arts, tree)
-            # TODO: delete debug
-            raw_deps = [(n.ord, n.raw_deps) for n in tree.descendants + tree.empty_nodes]
-            art_mapping = {str(e.misc['original_ord']): e for e in tree.empty_nodes}
+            empty_old_ords = [e.misc['original_ord'] for e in tree.empty_nodes]
             if remaining_arts:
-                for e in tree.empty_nodes:
-                    # now we work the deps of the empty nodes, taking the values from misc['arts_deps']
-                    orig_deps = e.misc['art_deps']
-                    if orig_deps:
-                        dep, rel = e.misc['art_deps'].split("%:%")
-                        if dep in art_mapping.keys():
-                            empty_parent = art_mapping[dep]
-                        elif dep == '0':
-                            empty_parent = tree
-                            logging.debug(f"Setting deps root to 0 for {e.form} in {tree.address()}")
-                        else:
-                            empty_parent = [n for n in tree.descendants + tree.empty_nodes if n.ord == int(dep)][0]
-                        e.deps.append({'parent': empty_parent, 'deprel': rel})
-                    else:
-                        logging.error(f'Something wrong with the deps of {tree.address()}, {e.ord}')
-
-                for node in tree.descendants:
-                    if node.misc['art_deps']:
-                        dep_head, dep_rel = node.misc['art_deps'].split(":")
+                for empty in tree.empty_nodes:
+                    oord = empty.misc['original_ord']
+                    # now we find all the dependents
+                    deps_on_empty = [d for d in original_deps if d[0] == oord]
+                    # we loop over the "dependents" of empty
+                    for d in deps_on_empty:
                         try:
-                            node.deps.append({'parent': art_mapping[dep_head], 'deprel': dep_rel})
-                        except KeyError:
+                            node = [n for n in tree.descendants + tree.empty_nodes if n.misc['original_ord'] == d[-1]][0]
+                        except IndexError:
+                            logging.error(f'Dependent node of {tree.address()}, {empty.form} with ord {d[-1]} not found')
                             continue
-                        raw_deps = [(n.ord, n.raw_deps) for n in tree.descendants + tree.empty_nodes]
+                        node.deps.append({'parent': empty, 'deprel': d[1]})
+
+                    # now we set the HEAD of EMPTY, unless the head is empty as well:
+                    e_heads = [d for d in original_deps if d[-1] == oord]
+                    for eh in e_heads:
+                        # head might be the root
+                        if eh[0] == '0':
+                            e_parent = tree
+                        else:
+                            try:
+                                e_parent = [n for n in tree.descendants + tree.empty_nodes
+                                            if n.misc['original_ord'] == eh[0]]
+                            except IndexError:
+                                logging.error(
+                                    f'Head node of {tree.address()}, {empty.form} with ord {eh[0]} not found')
+                                continue
+                            if e_heads not in empty_old_ords:
+                                empty.deps.append({'parent': e_parent, 'deprel': eh[1]})

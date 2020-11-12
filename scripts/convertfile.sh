@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 # set the pipeline straight
-udapy read.Agldt files="$1" \
+udapy -v read.Agldt files="$1" \
   agldt.SetSpaceAfter \
   agldt.CreateUpos \
   agldt.CreateFeats \
   .SetMember \
   .ShallowConverter \
+  .ShiftArtificials \
   .SubTreeConverter with_enhanced="True" \
   .FixObj \
   .RehangPunct \
