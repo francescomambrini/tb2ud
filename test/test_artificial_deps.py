@@ -50,5 +50,5 @@ class TestEnhDeps(unittest.TestCase):
 
     def test_write_converted(self):
         #self.apply_converter()
-        writer = ConlluWriter(files='/home/francesco/Desktop/test.conllu')
+        writer = ConlluWriter(files='test_artificial_deps.conllu')
         writer.apply_on_document(self.doc)

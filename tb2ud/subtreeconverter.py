@@ -5,6 +5,12 @@ from udapi.block.agldt.agldt_util.subtrees import get_subtree_depth
 from tb2ud.utils.constructions import *
 from tb2ud.utils import get_first_in_priority
 
+from collections import namedtuple
+
+# create a named tuple to map empty nodes: parent_rel is a tuple (head, deprel),
+# dep_list a list of tuples (dependent, rel)
+Emptymap = namedtuple('Emptymap', 'emptynode oldord parent_rel dep_list')
+
 
 class SubTreeConverter(Block):
     """
@@ -85,21 +91,6 @@ class SubTreeConverter(Block):
                 element.parent = b
                 return None
 
-    # @staticmethod
-    # def delete_deps_to_art(node, tree, warning=True):
-    #     """
-    #     In case an artificial node is deleted, make sure that the `deps` to it are also deleted
-    #
-    #     """
-    #     allnodes = tree.descendants + tree.empty_nodes
-    #     for sent_node in allnodes:
-    #         deps = sent_node.deps
-    #         for i,dep in enumerate(deps):
-    #             if dep.get('parent') is node:
-    #                 if warning:
-    #                     logging.warning(f'Deleting deps from {sent_node.address()} to {node.address()}')
-    #                 del sent_node.deps[i]
-
     @staticmethod
     def write_deps_in_misc(tree):
         """
@@ -118,7 +109,7 @@ class SubTreeConverter(Block):
                 # n.deps.append({'parent': n.parent, 'deprel': n.deprel})
                 n.misc['art_deps'] = f'{n.parent.ord}%:%{n.deprel}'
 
-    def copy_to_empty(self, artificials, tree):
+    def copy_to_empty(self, artificials, tree, heads_of_arts, children_of_arts, second_level_arts):
         """
         Makes a copy of the artificial nodes, and attaches them to the root of the sentence.
         It also deletes (with rehanging of the child nodes) the original artificial nodes.
@@ -131,21 +122,29 @@ class SubTreeConverter(Block):
 
         tree : Root
             the sentence tree
+
+        heads_of_arts : dict
+            dictionary of ArtificialNode: parent node of art
+
+        children_of_arts : dict
+            dictionary ArtificialNode: its children
+
+        second_level_arts : iter
+            list or iterable with all artificial that depends on another artificial
+
+        Returns
+        -------
+        list of Namedtuple (Emptymap)
         """
 
-        # def nonart_or_previous(node, iter=1):
-        #     prev = node.prev_node
-        #     if prev.misc['NodeType'] != 'Artificial':
-        #         neword = f'{prev.ord}.{iter}'
-        #     else:
-        #         neword = nonart_or_previous(prev, iter=iter + 1)
-        #     return neword
-        def set_empty_ord(n, tree, iter=1):
-            empty_ords = [e.ord for e in tree.empty_nodes]
-            neword = float(f'{n.prev_node.ord}.{iter}')
+        def set_empty_ord(n, root, iteration=1):
+            empty_ords = [e.ord for e in root.empty_nodes]
+            neword = float(f'{n.prev_node.ord}.{iteration}')
             if neword in empty_ords:
-                neword = set_empty_ord(n, tree, iter=iter+1)
+                neword = set_empty_ord(n, root, iteration=iteration+1)
             return neword
+
+        empty_maps = []
 
         for art in artificials:
             lemma = art.lemma if art.lemma else None
@@ -156,7 +155,7 @@ class SubTreeConverter(Block):
             form = f'E{ord_id}'
             empty = tree.create_empty_child(form=form, lemma=lemma, upos=upos, xpos=xpos,
                                             feats=feats)
-            logging.debug(f'Creating empty node at {tree.address()} {empty.form}')
+            logging.info(f'Creating empty node at {tree.address()} {empty.form}')
 
             # we set the ord now
             empty.ord = float(ord_id)
@@ -168,23 +167,33 @@ class SubTreeConverter(Block):
                           'art_deps': art.misc.get('art_deps'),
                           'original_ord': str(art.misc['original_ord'])}
 
-            # and the deps
-            # empty.deps.append({'parent': art.parent, 'deprel': art.deprel})
+            eparent = ''
+            if art not in second_level_arts:
+                eparent = heads_of_arts[art]
+            else:
+                for en in empty_maps:
+                    for c in en.dep_list:
+                        if c[0] == art:
+                            eparent = en.emptynode
+            if eparent == '':
+                eparent = art.root
+                logging.error(f"Couldn't find a parent for articial node {art.root.address},{empty.form} ({art.form})")
 
-            # now let's rehang the deps of the other nodes:
-            # for n in tree.descendants + tree.empty_nodes:
-            #     for d in n.deps:
-            #         if d.get('parent') is art:
-            #             d['parent'] = empty
+            emap = Emptymap(empty, art.ord, (eparent, art.deprel), [(c, c.deprel) for c in children_of_arts[art]])
 
-            # now we clean house, we get rid of the copied artificial
             art.remove(children='rehang')
+            empty_maps.append(emap)
+
+        return empty_maps
 
     #         self.delete_deps_to_art(art, tree, warning=True)
 
     def process_tree(self, tree):
         subtrees = get_subtree_depth(tree)
         arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
+        arts_on_arts = [a for a in arts if a.parent in arts]
+        art_original_children = {a: a.children for a in arts}
+        art_original_heads = {a: a.parent for a in arts}
         if self._with_enhanced:
             self.write_deps_in_misc(tree)
             for a in arts:
@@ -315,33 +324,24 @@ class SubTreeConverter(Block):
 
         if self._with_enhanced:
             remaining_arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
-            # logging.debug(f'There are {len(remaining_arts)} arts in sentence {tree.address()}')
-            self.copy_to_empty(remaining_arts, tree)
-            # TODO: delete debug
-            raw_deps = [(n.ord, n.raw_deps) for n in tree.descendants + tree.empty_nodes]
+            empty_maps = self.copy_to_empty(remaining_arts, tree, art_original_heads, art_original_children, arts_on_arts)
             art_mapping = {str(e.misc['original_ord']): e for e in tree.empty_nodes}
             if remaining_arts:
-                for e in tree.empty_nodes:
-                    # now we work the deps of the empty nodes, taking the values from misc['arts_deps']
-                    orig_deps = e.misc['art_deps']
-                    if orig_deps:
-                        dep, rel = e.misc['art_deps'].split("%:%")
-                        if dep in art_mapping.keys():
-                            empty_parent = art_mapping[dep]
-                        elif dep == '0':
-                            empty_parent = tree
-                            logging.debug(f"Setting deps root to 0 for {e.form} in {tree.address()}")
-                        else:
-                            empty_parent = [n for n in tree.descendants + tree.empty_nodes if n.ord == int(dep)][0]
-                        e.deps.append({'parent': empty_parent, 'deprel': rel})
-                    else:
-                        logging.error(f'Something wrong with the deps of {tree.address()}, {e.ord}')
+                for e in empty_maps:
+                    enods = [e.emptynode for e in empty_maps]
+                    # that sets the deps from empty to head of former artificial
+                    e.emptynode.deps.append({'parent': e.parent_rel[0], 'deprel': e.parent_rel[1]})
 
-                for node in tree.descendants:
-                    if node.misc['art_deps']:
-                        dep_head, dep_rel = node.misc['art_deps'].split(":")
-                        try:
-                            node.deps.append({'parent': art_mapping[dep_head], 'deprel': dep_rel})
-                        except KeyError:
-                            continue
-                        raw_deps = [(n.ord, n.raw_deps) for n in tree.descendants + tree.empty_nodes]
+                    # that should take care of deps of the empty nodes
+                    empty_childs = e.dep_list
+                    for ech in empty_childs:
+                        if ech[0] in tree.descendants:
+                            ech[0].deps.append({'parent': e.emptynode, 'deprel': ech[1]})
+
+                # for node in tree.descendants:
+                    # if node.misc['art_deps']:
+                    #     dep_head, dep_rel = node.misc['art_deps'].split("%:%")
+                    #     try:
+                    #         node.deps.append({'parent': art_mapping[dep_head], 'deprel': dep_rel})
+                    #     except KeyError:
+                    #         continue
