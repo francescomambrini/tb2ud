@@ -66,8 +66,16 @@ class ShallowConverter(Block):
         elif dep == 'ADV':
             if node.xpos[0] in ['n', 'p', 'a']:
                 node.deprel = 'obl'
-            elif node.xpos[0] == 'v':
+            elif node.xpos[0] == 'v' and node.xpos[4] != 'p':
                 node.deprel = 'advcl'
+            # participles tagged ADV are advcl unless they are substantivized
+            # we try to catch them by looking for an article, even this is not
+            # 100% the case...
+            elif node.xpos[0] in ['v', 't'] and node.xpos[4] == 'p':
+                node.deprel = 'advcl'
+                for c in node.children:
+                    if c.xpos[0] == 'l':
+                        node.deprel = 'obl'
             elif node.misc['NodeType'] == 'Artificial' and self.artificial_is_verb(node):
                 node.deprel = 'advcl'
             else:
@@ -85,6 +93,9 @@ class ShallowConverter(Block):
                 node.deprel = 'acl:relcl'
             elif node.xpos[0] == 'a':
                 node.deprel = 'amod'
+            # attributive participles are also treated like adjectives
+            # but we fix them in postprocessing, as we need syntax to
+            # distinguish them from substantivized genitives
             else:
                 node.deprel = 'nmod'
 

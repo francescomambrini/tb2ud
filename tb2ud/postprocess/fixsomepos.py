@@ -5,6 +5,7 @@ from tb2ud.utils.constructions import is_used_adjectively
 
 class FixSomePos(Block):
     def process_node(self, node):
+        
         # fix adverbs tagged as conj
         if node.udeprel == 'advmod' and node.upos in ['SCONJ', 'CCONJ']:
             node.upos = 'ADV'
@@ -17,3 +18,8 @@ class FixSomePos(Block):
                 node.upos = 'PRON'
                 if node.udeprel == 'det':
                     node.deprel = 'nmod'
+
+        # attributive participles are all nmod
+        if node.feats['VerbForm'] == 'Part' and node.deprel == 'nmod':
+            if is_used_adjectively(node):
+                node.deprel = 'amod'
