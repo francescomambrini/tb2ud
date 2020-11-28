@@ -13,9 +13,22 @@ The distinction is not easy at all!
 """
 
 from udapi.core.block import Block
+import logging
+
 
 class FixObj(Block):
 
     def process_node(self, node):
         # TODO: postprocess the different constructions tagged as OBJ
-        pass
+        objs = [n for n in node.children if n.udeprel == 'obj']
+        if len(objs) > 1:
+            accs = [o for o in objs if o.feats['Case'] == 'Acc']
+            dats = [o for o in objs if o.feats['Case'] == 'Dat']
+            for o in objs:
+                if 'case' in [c.udeprel for c in o.children]:
+                    o.deprel = 'obl:arg'
+                elif o in dats and accs:
+                    o.deprel = 'iobj'
+
+            if len([c for c in node.children if c.udeprel == 'obj']) > 1:
+                logging.warning(f'Node {node.address()} has more than 2 obj\'s, but I can\'t sort them out')

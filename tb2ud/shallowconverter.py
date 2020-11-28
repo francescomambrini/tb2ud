@@ -77,12 +77,14 @@ class ShallowConverter(Block):
         elif dep == 'ATR':
             # if the ATR node is an indicative, optative or subj. verb
             # then it's the head of a relative clause
-            if node.xpos[0] == 'l':
+            if node.xpos[0] == 'l' or node.upos == 'DET':
                 node.deprel = 'det'
             elif node.xpos[0] == 'm':
                 node.deprel = 'nummod'
             elif node.xpos[0] == 'v' and node.xpos[4] in ['i', 's', 'o']:
                 node.deprel = 'acl:relcl'
+            elif node.xpos[0] == 'a':
+                node.deprel = 'amod'
             else:
                 node.deprel = 'nmod'
 

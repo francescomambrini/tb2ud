@@ -155,7 +155,7 @@ class SubTreeConverter(Block):
             form = f'E{ord_id}'
             empty = tree.create_empty_child(form=form, lemma=lemma, upos=upos, xpos=xpos,
                                             feats=feats)
-            logging.info(f'Creating empty node at {tree.address()} {empty.form}')
+            logging.debug(f'Creating empty node at {tree.address()} {empty.form}')
 
             # we set the ord now
             empty.ord = float(ord_id)
@@ -259,7 +259,7 @@ class SubTreeConverter(Block):
                     first.parent = subtree.parent
                     for m in members:
                         m.parent = first
-                        m.deprel = 'apos'
+                        m.deprel = 'appos'
 
                     # we reassign all its remaining children
                     for c in subtree.children:
@@ -289,16 +289,34 @@ class SubTreeConverter(Block):
                     # pnom.parent = subtree.parent
                     # subtree.parent = pnom
 
+                    if subtree.upos == 'VERB':
+                        subtree.upos = 'AUX'
+
                     # for c in subtree.children:
                     #    c.parent = pnom
 
                     if subtree.misc['NodeType'] == 'Artificial':
                         subtree.remove(children="warn")
-                        logging.info(f'Removing node {subtree.address()}, {subtree.misc["original_dep"]}')
+                        logging.debug(f'Removing node {subtree.address()}, {subtree.misc["original_dep"]}')
                         # self.delete_deps_to_art(subtree, tree, warning=True)
                     else:
                         subtree.parent = pnom
                         subtree.deprel = 'cop'
+
+            # elif is_ell_comparative(subtree):
+            #     chs = subtree.children
+            #     sub = None
+            #     for i, c in enumerate(chs):
+            #         if c.misc['original_dep'] == 'SBJ':
+            #             sub = chs.pop(i)
+            #             break
+            #     if sub:
+            #         sub.deprel = subtree.deprel
+            #         self.redraw_subtree(sub, subtree)
+            #         for c in chs:
+            #             c.misc['orphaned'] = 'True'
+            #     else:
+            #         logging.error(f'Node {subtree.address()}, {subtree.form} should be head of simile, but no SBJ found')
 
             elif is_ellipsis_subtree(subtree):
                 chs = subtree.children
@@ -319,6 +337,10 @@ class SubTreeConverter(Block):
                 if newhead:
                     newhead.deprel = subtree.deprel
                     self.redraw_subtree(newhead, subtree)
+                    left_chs = [c for c in chs if c is not newhead]
+                    for left_c in left_chs:
+                        if left_c.udeprel in order_list and left_c.xpos[0] in ['a', 'v', 'n', 'p']:
+                            left_c.misc['orphaned'] = 'True'
                 else:
                     logging.error(f'Could not find candidates for promotion for {subtree.address()}, {subtree.form}')
 

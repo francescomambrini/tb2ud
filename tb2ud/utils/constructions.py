@@ -79,3 +79,47 @@ def is_ellipsis_subtree(subroot):
         return True
     else:
         return False
+
+
+def is_ell_comparative(subroot):
+    """
+    Checks whether a subtree is a simile/comparative clause with verb elided. In the AGLDT-like formalism,
+    all comparatives are annotated as clauses, e.g.:
+
+    "He jumped like a lion" --> "He jumped like a lion [jumps]"
+
+    We keep the empty node for the clause verb
+
+    Parameters
+    ----------
+    subroot : Node
+        the head of the subtree
+
+    Returns
+    -------
+    bool
+    """
+    if is_ellipsis_subtree(subroot):
+        if subroot.parent.lemma in ['ὡς', 'ἠύτε']:
+            return True
+
+
+def is_used_adjectively(node):
+    """
+    Check if a word (especially a DET) is used adjectivelly or pronominally
+
+    Parameters
+    ----------
+    node : udapi.core.node.Node
+
+    Returns
+    -------
+    bool
+
+    """
+    parent = node.parent
+    conditions = (node.udeprel in ['amod', 'det', 'nmod'],
+                  node.feats['Gender'] == parent.feats['Gender'],
+                  node.feats['Case'] == parent.feats['Case'],
+                  node.feats['Number'] == parent.feats['Number'])
+    return all(conditions)

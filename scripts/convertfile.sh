@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # set the pipeline straight
-udapy -v read.Agldt files="$1" \
+udapy read.Agldt files="$1" \
   agldt.SetSpaceAfter \
   agldt.CreateUpos \
   agldt.CreateFeats \
@@ -11,6 +11,8 @@ udapy -v read.Agldt files="$1" \
   .SubTreeConverter with_enhanced="True" \
   .FixObj \
   .RehangPunct \
+  .MakeEnhanced \
+  .postprocess.FixSomePos \
   .PurgeMisc \
   .text.UpdateText \
   util.Eval doc='doc.meta["docname"]=doc.meta["loaded_from"][:-4]+".conllu"' \
