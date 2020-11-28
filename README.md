@@ -32,11 +32,13 @@ Or, even better, create and configure a
 ## How to set up a `virtualenv`
 
 If you don't know what a virtual environment is, you'll find a lot of good tutorials 
-online, starting with [this one](https://docs.python.org/3.6/tutorial/venv.html) 
+online, starting with [this one](https://docs.python.org/3.6/tutorial/venv.html). 
+You may also want to consider [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/), 
+which makes a lot of things easier to manage.
 
-Follow the following three steps:
+Follow these three steps:
 
-1. create and activate a virtual environment (Python 3.6+); see the link above, you don't 
+1. create and activate a virtual environment (Python 3.6+); see the link above, if you don't 
 know how do it.
 
 2. install the required packages:
@@ -48,6 +50,13 @@ pip install -r requirements.txt
 3. create a `pth` file and enter the full path to the `tb2UD` and
 `tb2UD/tb2ud` folders; see [here](https://stackoverflow.com/a/10739838).
 
+If you have [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/), you also 
+have a `add2virtualenv` script, which takes care of step 3 for you:
+
+```bash
+add2virtualenv directory1 directory2 ...
+```
+
 ## How to use it
 
 In the `scripts` folders, you'll find a few bash scripts to perform 
@@ -57,6 +66,7 @@ You can test that everything is working fine by running the following script:
 
 ```bash
 # test.sh <input-file.xml>
+cd test # go to the tb2ud/test folder
 ./test.sh data/hdt-1-20-39-bu2.xml 
 ```
 

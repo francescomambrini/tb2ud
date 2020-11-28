@@ -1,0 +1,75 @@
+# sent_id = 1
+# text = αὕτη δ', Ὀρέστα, τοῦ λυκοκτόνου θεοῦ ἀγορὰ Λύκειος· [0]
+1	αὕτη	οὗτος	DET	p-s---fn-	Case=Nom|Gender=Fem|Number=Sing|PronType=Dem	9	nsubj	_	art_deps=1%:%nsubj|original_dep=SBJ|Ref=6
+2	δ'	δέ	ADV	d--------	PartType=Ptcl	9	cc	_	original_dep=COORD|Ref=6|SpaceAfter=No
+3	,	,	PUNCT	u--------	_	4	punct	_	original_dep=AuxX|Ref=6
+4	Ὀρέστα	Ὀρέστης	PROPN	n-s---mv-	Case=Voc|Gender=Masc|Number=Sing	9	vocative	_	art_deps=1%:%vocative|original_dep=ExD|Ref=6|SpaceAfter=No
+5	,	,	PUNCT	u--------	_	4	punct	_	original_dep=AuxX|Ref=6
+6	τοῦ	ὁ	DET	l-s---mg-	Case=Gen|Definite=Def|Gender=Masc|Number=Sing|PronType=Art	8	det	_	original_dep=ATR|Ref=6
+7	λυκοκτόνου	λυκοκτόνος	NOUN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	8	nmod	_	original_dep=ATR|Ref=6
+8	θεοῦ	θεός	NOUN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	9	nmod	_	original_dep=ATR|Ref=6
+9	ἀγορὰ	ἀγορά	NOUN	n-s---fn-	Case=Nom|Gender=Fem|Number=Sing	0	root	_	art_deps=1%:%xcomp|CoordMember|original_dep=PNOM|Ref=7
+10	Λύκειος	λύκειος	ADJ	a-s---fn-	Case=Nom|Gender=Fem|Number=Sing	9	nmod	_	original_dep=ATR|Ref=7|SpaceAfter=No
+11	·	·	PUNCT	u--------	_	0	punct	_	original_dep=AuxK|Ref=7
+
+# sent_id = 2
+# text = τοιγὰρ τὰ μὲν δόξαντα δηλώσω, σὺ δὲ ὀξεῖαν ἀκοὴν τοῖς ἐμοῖς λόγοις διδούς, εἰ μή τι καιροῦ τυγχάνω, μεθάρμοσον.
+1	τοιγὰρ	τοιγάρ	ADV	d--------	PartType=Ptcl	5	advmod	_	original_dep=AuxY|Ref=29
+2	τὰ	ὁ	DET	l-p---na-	Case=Acc|Definite=Def|Gender=Neut|Number=Plur|PronType=Art	4	det	_	original_dep=ATR|Ref=29
+3	μὲν	μέν	ADV	d--------	PartType=Ptcl	5	advmod	_	original_dep=AuxY|Ref=29
+4	δόξαντα	δοκέω	VERB	v-papana-	Case=Acc|Gender=Neut|Number=Plur|VerbForm=Part|Voice=Pass	5	obj	_	original_dep=OBJ|Ref=29
+5	δηλώσω	δηλόω	VERB	v1sfia---	Mood=Ind|Number=Sing|Person=1|Tense=Fut|Voice=Act	0	root	_	CoordMember|original_dep=PRED|Ref=29|SpaceAfter=No
+6	,	,	PUNCT	u--------	_	22	punct	_	original_dep=AuxX|Ref=29
+7	σὺ	σύ	PRON	p-s---mn-	Case=Nom|Gender=Masc|Number=Sing|Person=2|PronType=Prs	22	vocative	_	original_dep=ExD|Ref=29
+8	δὲ	δέ	ADV	d--------	PartType=Ptcl	22	cc	_	original_dep=COORD|Ref=29
+9	ὀξεῖαν	ὀξύς	ADJ	a-s---fa-	Case=Acc|Gender=Fem|Number=Sing	10	nmod	_	original_dep=ATR|Ref=30
+10	ἀκοὴν	ἀκοή	NOUN	n-s---fa-	Case=Acc|Gender=Fem|Number=Sing	14	obj	_	original_dep=OBJ|Ref=30
+11	τοῖς	ὁ	DET	l-p---md-	Case=Dat|Definite=Def|Gender=Masc|Number=Plur|PronType=Art	13	det	_	original_dep=ATR|Ref=30
+12	ἐμοῖς	ἐμός	DET	p-p---md-	Case=Dat|Gender=Masc|Number=Plur|Poss=Yes|PronType=Prs	13	nmod	_	original_dep=ATR|Ref=30
+13	λόγοις	λόγος	NOUN	n-p---md-	Case=Dat|Gender=Masc|Number=Plur	14	obj	_	original_dep=OBJ|Ref=30
+14	διδούς	δίδωμι	VERB	v-sppamn-	Case=Nom|Gender=Masc|Number=Sing|Tense=Pres|VerbForm=Part|Voice=Pass	22	advcl	_	original_dep=ADV|Ref=30|SpaceAfter=No
+15	,	,	PUNCT	u--------	_	20	punct	_	original_dep=AuxX|Ref=30
+16	εἰ	εἰ	SCONJ	c--------	_	20	mark	_	original_dep=AuxC|Ref=31
+17	μή	μή	ADV	d--------	_	20	advmod:neg	_	original_dep=AuxZ|Ref=31
+18	τι	τις	DET	p-s---na-	Case=Acc|Gender=Neut|Number=Sing|PronType=Ind	20	obl	_	original_dep=ADV|Ref=31
+19	καιροῦ	καιρός	NOUN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	20	obj	_	original_dep=OBJ|Ref=31
+20	τυγχάνω	τυγχάνω	VERB	v1spia---	Mood=Ind|Number=Sing|Person=1|Tense=Pres|Voice=Act	22	advcl	_	original_dep=ADV|Ref=31|SpaceAfter=No
+21	,	,	PUNCT	u--------	_	20	punct	_	original_dep=AuxX|Ref=31
+22	μεθάρμοσον	μεθαρμόζω	VERB	v2sama---	Mood=Imp|Number=Sing|Person=2|Voice=Act	5	conj	_	CoordMember|original_dep=PRED|Ref=31|SpaceAfter=No
+23	.	.	PUNCT	u--------	_	0	punct	_	original_dep=AuxK|Ref=31
+
+# sent_id = 3
+# text = ἢ τῶν ἐμῶν Ἅιδης τιν' ἵμερον τέκνων ἢ τῶν ἐκείνης ἔσχε δαίσασθαι πλέον; [0] [1]
+1	ἢ	ἤ	CCONJ	c--------	_	11	cc	_	original_dep=COORD|Ref=542
+2	τῶν	ὁ	DET	l-p---ng-	Case=Gen|Definite=Def|Gender=Neut|Number=Plur|PronType=Art	7	det	_	original_dep=ATR|Ref=542
+3	ἐμῶν	ἐμός	DET	p-p---ng-	Case=Gen|Gender=Neut|Number=Plur|Poss=Yes|PronType=Prs	7	nmod	_	original_dep=ATR|Ref=542
+4	Ἅιδης	ᾍδης	PROPN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	11	nsubj	_	original_dep=SBJ|Ref=542
+5	τιν'	τις	DET	p-s---ma-	Case=Acc|Gender=Masc|Number=Sing|PronType=Ind	6	nmod	_	original_dep=ATR|Ref=542
+6	ἵμερον	ἵμερος	NOUN	n-s---ma-	Case=Acc|Gender=Masc|Number=Sing	11	obj	_	original_dep=OBJ|Ref=542
+7	τέκνων	τέκνον	NOUN	n-p---ng-	Case=Gen|Gender=Neut|Number=Plur	6	nmod	_	original_dep=ATR|Ref=542
+8	ἢ	ἤ	CCONJ	c--------	_	9	mark	_	original_dep=AuxC|Ref=543
+8.1	E8.1	_	_	_	_	_	_	8:advcl	AposMember=|art_deps=8%:%advcl|CoordMember=|original_dep=ADV|original_ord=9
+8.2	E8.2	_	_	_	_	_	_	8.1:obj	AposMember=|art_deps=9%:%obj|CoordMember=|original_dep=OBJ|original_ord=10
+9	τῶν	ὁ	PRON	p-p---ng-	Case=Gen|Definite=Def|Gender=Neut|Number=Plur|PronType=Art	13	advcl	8.2:advcl	art_deps=10%:%nmod|original_dep=ATR|Ref=543
+10	ἐκείνης	ἐκεῖνος	DET	p-s---fg-	Case=Gen|Gender=Fem|Number=Sing|PronType=Dem	9	nmod	_	original_dep=ATR|Ref=543
+11	ἔσχε	ἔχω	VERB	v3saia---	Mood=Ind|Number=Sing|Person=3|Tense=Past|Voice=Act	0	root	_	CoordMember|original_dep=PRED|Ref=543
+12	δαίσασθαι	δαίνυμι	VERB	v--anm---	VerbForm=Inf|Voice=Mid	11	advcl	_	original_dep=ADV|Ref=543
+13	πλέον	πλείων	ADJ	a-s---nac	Case=Acc|Degree=Cmp|Gender=Neut|Number=Sing	11	obl	_	original_dep=ADV|Ref=543|SpaceAfter=No
+14	;	;	PUNCT	u--------	_	0	punct	_	original_dep=AuxK|Ref=543
+
+# sent_id = 4
+# text = ἄσκευον αὐτὸν ἀσπίδων τε καὶ στρατοῦ δόλοισι κλέψαι χειρὸς ἐνδίκους σφαγάς. [0]
+0.1	E0.1	_	_	_	_	_	_	0:root	AposMember=|art_deps=0%:%root|CoordMember=|original_dep=PRED|original_ord=1
+1	ἄσκευον	ἄσκευος	ADJ	a-s---ma-	Case=Acc|Gender=Masc|Number=Sing	8	advcl:compl	_	original_dep=AtvV|Ref=36
+2	αὐτὸν	αὐτός	DET	p-s---ma-	Case=Acc|Gender=Masc|Number=Sing|PronType=Prs	8	advcl:compl	_	original_dep=AtvV|Ref=36
+3	ἀσπίδων	ἀσπίς	NOUN	n-p---fg-	Case=Gen|Gender=Fem|Number=Plur	1	obj	_	CoordMember|original_dep=OBJ|Ref=36
+4	τε	τε	CCONJ	c--------	_	6	cc	_	original_dep=AuxY|Ref=36
+5	καὶ	καί	CCONJ	c--------	_	6	cc	_	original_dep=COORD|Ref=36
+6	στρατοῦ	στρατός	NOUN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	3	conj	_	CoordMember|original_dep=OBJ|Ref=36
+7	δόλοισι	δόλος	NOUN	n-p---md-	Case=Dat|Gender=Masc|Number=Plur	8	obl	_	original_dep=ADV|Ref=37
+8	κλέψαι	κλέπτω	VERB	v--ana---	VerbForm=Inf|Voice=Act	0	root	0.1:root	art_deps=1%:%ccomp|original_dep=OBJ|Ref=37
+9	χειρὸς	χείρ	NOUN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	11	nmod	_	original_dep=ATR|Ref=37
+10	ἐνδίκους	ἔνδικος	ADJ	a-p---fa-	Case=Acc|Gender=Fem|Number=Plur	11	nmod	_	original_dep=ATR|Ref=37
+11	σφαγάς	σφαγή	NOUN	n-p---fa-	Case=Acc|Gender=Fem|Number=Plur	8	obj	_	original_dep=OBJ|Ref=37|SpaceAfter=No
+12	.	.	PUNCT	u--------	_	0	punct	_	original_dep=AuxK|Ref=37
+
