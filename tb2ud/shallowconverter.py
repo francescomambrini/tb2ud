@@ -14,7 +14,7 @@ class ShallowConverter(Block):
 
     By shallow mapping, we mean a mapping between the deprel labels where no
     subtree is restructured. Thus, this script works node by node and it won't
-    rearrange the tree, not even in the case of structures that must be changed 
+    rearrange the tree, not even in the case of structures that must be changed
     from one schema to the other (like e.g. the nominal predicate labeled as PNOM).
 
     Use `SubTreeConverter` to restructure the trees according to the UD guidelines.
@@ -147,6 +147,8 @@ class ShallowConverter(Block):
         elif dep == 'AuxZ':
             if node.lemma in negs:
                 node.deprel = 'advmod:neg'
+            elif node.xpos[0] == 'r':
+                node.deprel = 'compound:prt'
             else:
                 node.deprel = 'advmod'
 
