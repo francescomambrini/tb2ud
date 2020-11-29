@@ -15,4 +15,3 @@ class RehangPunct(FixPunct):
                 else:
                     logging.error(f"Sent {node.root.address()} does not have a root!")
         super().process_tree(tree)
-
