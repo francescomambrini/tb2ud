@@ -91,6 +91,8 @@ class ShallowConverter(Block):
                 node.deprel = 'nummod'
             elif node.xpos[0] == 'v' and node.xpos[4] in ['i', 's', 'o']:
                 node.deprel = 'acl:relcl'
+            elif node.xpos[0] == 'v' and node.xpos[4] == 'n':
+                node.deprel = 'acl'
             elif node.xpos[0] == 'a':
                 node.deprel = 'amod'
             # attributive participles are also treated like adjectives
@@ -173,6 +175,14 @@ class ShallowConverter(Block):
             # occasionally, AuxY is used for emphatically repeated words
             elif node.lemma == head.lemma:
                 node.deprel = 'discourse'
+            # sometimes it is used with parenthetical verbs, like οἶδα
+            elif node.xpos[0] == 'v':
+                # if it is intoduced by a conj it is an advcl (it happens with Gorman trees)
+                if node.parent.upos == 'SCONJ':
+                    node.deprel = 'advcl'
+                    node.misc['original_dep'] = 'ADV'
+                else:
+                    node.deprel = 'parataxis'
             # another potential use is with MWEs, where "fixed" is to be used
             # but I can't come up with an AG example of that...
             else:

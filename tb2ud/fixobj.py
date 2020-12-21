@@ -21,13 +21,17 @@ class FixObj(Block):
     def process_node(self, node):
         # TODO: postprocess the different constructions tagged as OBJ
         objs = [n for n in node.children if n.udeprel == 'obj']
+        # first round: get rid
+        for o in objs:
+            if 'case' in [c.udeprel for c in o.children]:
+                o.deprel = 'obl:arg'
+
+        # second round: do we still have multiple obj's?
         if len(objs) > 1:
             accs = [o for o in objs if o.feats['Case'] == 'Acc']
             dats = [o for o in objs if o.feats['Case'] == 'Dat']
             for o in objs:
-                if 'case' in [c.udeprel for c in o.children]:
-                    o.deprel = 'obl:arg'
-                elif o in dats and accs:
+                if o in dats and accs:
                     o.deprel = 'iobj'
 
             if len([c for c in node.children if c.udeprel == 'obj']) > 1:

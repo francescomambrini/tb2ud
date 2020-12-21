@@ -1,4 +1,6 @@
 from tb2ud.fixobj import FixObj
+from tb2ud.createupos import CreateUpos
+from tb2ud.createfeats import CreateFeats
 from tb2ud.makeenhanced import MakeEnhanced
 from tb2ud.purgemisc import PurgeMisc
 from tb2ud.rehangpunct import RehangPunct

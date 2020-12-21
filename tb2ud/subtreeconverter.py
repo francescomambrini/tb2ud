@@ -5,11 +5,8 @@ from udapi.block.agldt.agldt_util.subtrees import get_subtree_depth
 from tb2ud.utils.constructions import *
 from tb2ud.utils import get_first_in_priority
 
-from collections import namedtuple
-
 # create a named tuple to map empty nodes: parent_rel is a tuple (head, deprel),
 # dep_list a list of tuples (dependent, rel)
-Emptymap = namedtuple('Emptymap', 'emptynode oldord parent_rel dep_list')
 
 
 class SubTreeConverter(Block):
@@ -83,8 +80,11 @@ class SubTreeConverter(Block):
         val : str
             the value to be matched; must be a valid value for that `atr` (e.g. `conj`)
         """
+        # TODO: attachment of cc must be fixed: 1. cc with the first conj 2. correct positioning of postpositive conjs
         h = element.parent
         right_bros = [ch for ch in h.children if ch.precedes(element) is False]
+        if element.lemma in ['τε', '-τε', 'δέ']:
+            right_bros.append(element.prev_node)
         for b in right_bros:
             checked_val = getattr(b, attr)
             if checked_val == val:
@@ -108,83 +108,6 @@ class SubTreeConverter(Block):
             if n.misc['NodeType'] == 'Artificial' or n.parent.misc['NodeType'] == 'Artificial':
                 # n.deps.append({'parent': n.parent, 'deprel': n.deprel})
                 n.misc['art_deps'] = f'{n.parent.ord}%:%{n.deprel}'
-
-    def copy_to_empty(self, artificials, tree, heads_of_arts, children_of_arts, second_level_arts):
-        """
-        Makes a copy of the artificial nodes, and attaches them to the root of the sentence.
-        It also deletes (with rehanging of the child nodes) the original artificial nodes.
-        (rehanging is needed, because a child of an artificial could be a still unresolved artificial)
-
-        Parameters
-        ----------
-        artificials : iterable
-            iterable with all the artificial nodes
-
-        tree : Root
-            the sentence tree
-
-        heads_of_arts : dict
-            dictionary of ArtificialNode: parent node of art
-
-        children_of_arts : dict
-            dictionary ArtificialNode: its children
-
-        second_level_arts : iter
-            list or iterable with all artificial that depends on another artificial
-
-        Returns
-        -------
-        list of Namedtuple (Emptymap)
-        """
-
-        def set_empty_ord(n, root, iteration=1):
-            empty_ords = [e.ord for e in root.empty_nodes]
-            neword = float(f'{n.prev_node.ord}.{iteration}')
-            if neword in empty_ords:
-                neword = set_empty_ord(n, root, iteration=iteration+1)
-            return neword
-
-        empty_maps = []
-
-        for art in artificials:
-            lemma = art.lemma if art.lemma else None
-            upos = art.upos if art.upos else None
-            xpos = art.xpos if art.xpos else None
-            feats = art.feats if art.feats else None
-            ord_id = set_empty_ord(art, tree)
-            form = f'E{ord_id}'
-            empty = tree.create_empty_child(form=form, lemma=lemma, upos=upos, xpos=xpos,
-                                            feats=feats)
-            logging.debug(f'Creating empty node at {tree.address()} {empty.form}')
-
-            # we set the ord now
-            empty.ord = float(ord_id)
-
-            # we also set some important misc values
-            empty.misc = {'original_dep': art.misc.get('original_dep'),
-                          'AposMember': art.misc.get('AposMember'),
-                          'CoordMember': art.misc.get('CoordMember'),
-                          'art_deps': art.misc.get('art_deps'),
-                          'original_ord': str(art.misc['original_ord'])}
-
-            eparent = ''
-            if art not in second_level_arts:
-                eparent = heads_of_arts[art]
-            else:
-                for en in empty_maps:
-                    for c in en.dep_list:
-                        if c[0] == art:
-                            eparent = en.emptynode
-            if eparent == '':
-                eparent = art.root
-                logging.error(f"Couldn't find a parent for articial node {art.root.address},{empty.form} ({art.form})")
-
-            emap = Emptymap(empty, art.ord, (eparent, art.deprel), [(c, c.deprel) for c in children_of_arts[art]])
-
-            art.remove(children='rehang')
-            empty_maps.append(emap)
-
-        return empty_maps
 
     #         self.delete_deps_to_art(art, tree, warning=True)
 
@@ -222,6 +145,12 @@ class SubTreeConverter(Block):
             elif is_coord_subtree(subtree):
                 # requires node.misc['CoordMember'] for coords
                 members = [c for c in subtree.children if c.misc['CoordMember'] is True]
+
+                # TODO: work with shared modifiers
+                # shared = [c for c in subtree.children if c.misc['CoordMember'] is False]
+                for c in subtree.children:
+                    if c not in members and c.misc['original_dep'] not in ['AuxY', 'AuxX', 'AuxZ']:
+                        c.misc['SharedMod'] = 'True'
                 if not members:
                     logging.error(f"No coordination members for {subtree.address()}")
                 else:
@@ -278,11 +207,15 @@ class SubTreeConverter(Block):
             elif is_copula_subtree(subtree):
                 try:
                     pnom = [c for c in subtree.children
-                                if c.misc['original_dep'] == 'PNOM'][0]
+                            if c.misc['original_dep'] == 'PNOM'][0]
                 except IndexError:
                     logging.error(f"No PNOM for copula at {subtree.address()}?")
                     continue
                 else:
+                    # prep phrases as pnom are not transformed
+                    if 'case' in [c.deprel for c in pnom.children]:
+                        pnom.deprel = 'obl'
+                        continue
                     pnom.deprel = subtree.deprel
                     self.redraw_subtree(pnom, subtree)
                     # pnom.deprel = subtree.deprel
@@ -318,47 +251,46 @@ class SubTreeConverter(Block):
             #     else:
             #         logging.error(f'Node {subtree.address()}, {subtree.form} should be head of simile, but no SBJ found')
 
-            elif is_ellipsis_subtree(subtree):
-                chs = subtree.children
-                # original_head = subtree.parent
-
-                # if self._with_enhanced:
-                #     # original_head.deps.append({'parent': subtree, 'deprel': subtree.deprel})
-                #     subtree.deps.append({'parent': original_head, 'deprel': subtree.deprel})
-                #     for c in chs:
-                #         c.deps.append({'parent': subtree, 'deprel': c.deprel})
-                    # # TODO: enhanced deps of empty n are still not restructured (if art node depends on conj, so does the enh dep)
-
-                # now we seek for a node to promote
-                # order: nsubj > obj > iobj > obl > advmod > csubj > xcomp > ccomp > advcl > dislocated > vocative
-                order_list = ['nsubj', 'obj', 'iobj', 'obl', 'advmod', 'csubj', 'xcomp', 'ccomp', 'advcl', 'dislocated',
-                              'vocative', 'nmod']
-                newhead = get_first_in_priority(chs, order_list)
-                if newhead:
-                    newhead.deprel = subtree.deprel
-                    self.redraw_subtree(newhead, subtree)
-                    left_chs = [c for c in chs if c is not newhead]
-                    for left_c in left_chs:
-                        if left_c.udeprel in order_list and left_c.xpos[0] in ['a', 'v', 'n', 'p']:
-                            left_c.misc['orphaned'] = 'True'
-                else:
-                    logging.error(f'Could not find candidates for promotion for {subtree.address()}, {subtree.form}')
-
-        if self._with_enhanced:
-            remaining_arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
-            empty_maps = self.copy_to_empty(remaining_arts, tree, art_original_heads, art_original_children, arts_on_arts)
-            art_mapping = {str(e.misc['original_ord']): e for e in tree.empty_nodes}
-            if remaining_arts:
-                for e in empty_maps:
-                    enods = [e.emptynode for e in empty_maps]
-                    # that sets the deps from empty to head of former artificial
-                    e.emptynode.deps.append({'parent': e.parent_rel[0], 'deprel': e.parent_rel[1]})
-
-                    # that should take care of deps of the empty nodes
-                    empty_childs = e.dep_list
-                    for ech in empty_childs:
-                        if ech[0] in tree.descendants:
-                            ech[0].deps.append({'parent': e.emptynode, 'deprel': ech[1]})
+        #     elif is_ellipsis_subtree(subtree):
+        #         chs = subtree.children
+        #         # original_head = subtree.parent
+        #
+        #         # if self._with_enhanced:
+        #         #     # original_head.deps.append({'parent': subtree, 'deprel': subtree.deprel})
+        #         #     subtree.deps.append({'parent': original_head, 'deprel': subtree.deprel})
+        #         #     for c in chs:
+        #         #         c.deps.append({'parent': subtree, 'deprel': c.deprel})
+        #
+        #         # now we seek for a node to promote
+        #         # order: nsubj > obj > iobj > obl > advmod > csubj > xcomp > ccomp > advcl > dislocated > vocative
+        #         order_list = ['nsubj', 'obj', 'iobj', 'obl', 'advmod', 'csubj', 'xcomp', 'ccomp', 'advcl', 'dislocated',
+        #                       'vocative', 'nmod']
+        #         newhead = get_first_in_priority(chs, order_list)
+        #         if newhead:
+        #             newhead.deprel = subtree.deprel
+        #             self.redraw_subtree(newhead, subtree)
+        #             left_chs = [c for c in chs if c is not newhead]
+        #             for left_c in left_chs:
+        #                 if left_c.udeprel in order_list and left_c.xpos[0] in ['a', 'v', 'n', 'p']:
+        #                     left_c.misc['orphaned'] = 'True'
+        #         else:
+        #             logging.error(f'Could not find candidates for promotion for {subtree.address()}, {subtree.form}')
+        #
+        # if self._with_enhanced:
+        #     remaining_arts = [n for n in tree.descendants if n.misc['NodeType'] == 'Artificial']
+        #     empty_maps = self.copy_to_empty(remaining_arts, tree, art_original_heads, art_original_children, arts_on_arts)
+        #     art_mapping = {str(e.misc['original_ord']): e for e in tree.empty_nodes}
+        #     if remaining_arts:
+        #         for e in empty_maps:
+        #             enods = [e.emptynode for e in empty_maps]
+        #             # that sets the deps from empty to head of former artificial
+        #             e.emptynode.deps.append({'parent': e.parent_rel[0], 'deprel': e.parent_rel[1]})
+        #
+        #             # that should take care of deps of the empty nodes
+        #             empty_childs = e.dep_list
+        #             for ech in empty_childs:
+        #                 if ech[0] in tree.descendants:
+        #                     ech[0].deps.append({'parent': e.emptynode, 'deprel': ech[1]})
 
                 # for node in tree.descendants:
                     # if node.misc['art_deps']:

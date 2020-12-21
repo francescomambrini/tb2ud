@@ -4,8 +4,6 @@ import argparse
 from udapi.core.document import Document
 from udapi.block.agldt.setspaceafter import SetSpaceAfter
 from udapi.block.read.agldt import Agldt as AgldtReader
-from udapi.block.agldt.createupos import CreateUpos
-from udapi.block.agldt.createfeats import CreateFeats
 from tb2ud import *
 from tb2ud.text.updatetext import UpdateText
 from tb2ud.postprocess.fixsomepos import FixSomePos
@@ -71,20 +69,3 @@ for block in blocks:
 
 if outname:
     ordered_doc.store_conllu(outname)
-
-# udapy read.Agldt files="$1" \
-#   agldt.SetSpaceAfter \
-#   agldt.CreateUpos \
-#   agldt.CreateFeats \
-#   .SetMember \
-#   .ShallowConverter \
-#   .ShiftArtificials \
-#   .SubTreeConverter with_enhanced="True" \
-#   .FixObj \
-#   .RehangPunct \
-#   .MakeEnhanced \
-#   .postprocess.FixSomePos \
-#   .PurgeMisc \
-#   .text.UpdateText \
-#   util.Eval doc='doc.meta["docname"]=doc.meta["loaded_from"][:-4]+".conllu"' \
-#   write.Conllu docname_as_file=1

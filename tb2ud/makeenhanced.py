@@ -13,5 +13,5 @@ class MakeEnhanced(Block):
     def process_tree(self, tree):
         if _has_deps(tree):
             for n in tree.descendants:
-                if n.raw_deps == '_':
+                if not n.raw_deps or n.raw_deps == '_':
                     n.deps.append({'parent': n.parent, 'deprel': n.deprel})

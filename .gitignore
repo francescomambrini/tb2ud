@@ -4,6 +4,9 @@
 # Flavio's presentation
 doc/Praesentatiobis.pdf
 
+# Filelists
+filelists/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
