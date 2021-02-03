@@ -59,8 +59,8 @@ outname = args.out
 
 blocks = [SetSpaceAfter(), CreateUpos(), CreateFeats(), SetMember(),
           ShallowConverter(), ShiftArtificials(),
-          SubTreeConverter(with_enhanced=True),
-          FixObj(), # Skipping MakeEnhanced for now
+          SubTreeConverter(with_enhanced=True), FixObj(),
+          SetArtificials(), MakeEnhanced(), # COMMENT OUT if you DO NOT want empty nodes and enhanced deps
           RehangPunct(), FixSomePos(), PurgeMisc(), UpdateText()]
 
 

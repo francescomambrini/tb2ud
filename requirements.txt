@@ -2,4 +2,5 @@ colorama
 termcolor
 lxml
 ufal.udpipe
+pyconll
 git+git://github.com/francescomambrini/udapi-python.git@agdt

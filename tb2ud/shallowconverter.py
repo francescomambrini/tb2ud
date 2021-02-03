@@ -149,7 +149,11 @@ class ShallowConverter(Block):
 
         # ExD
         elif dep == 'ExD':
-            if node.xpos[7] in ['n', 'v']:
+            if node.misc["NodeType"] == 'Artificial':
+                # TODO: verify!
+                # actually, I am not sure...
+                'vocative'
+            elif node.xpos[7] in ['n', 'v']:
                 node.deprel = 'vocative'
             elif node.xpos[0] in ['e', 'i']:
                 node.deprel = 'discourse'

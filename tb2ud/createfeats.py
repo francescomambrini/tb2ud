@@ -29,10 +29,17 @@ ptcl = ['ἆρα', 'ἀτάρ', 'αὐτάρ', 'αὖ', 'γάρ', 'γε', 'γο�
         'ἀτάρ', 'ἄν', 'ἄν1', 'ἄρα', 'ἆρα', 'ἤτοι', 'ἦ']
 
 
+# TODO: 1. tense and aorist
+# TODO: medio/passive, middle, passive...; solutions: PROIEL: mid per dep, Voice=Mid,Pass; Perseus: always Mid
+
 class CreateFeats(Block):
     def process_node(self, node):
         if node.misc["NodeType"] == 'Artificial':
             return None
+        if len(node.xpos) > 10:
+            newxpos = node.xpos[:9]
+            node.xpos = newxpos
+            logging.warning(f'{node.form} ({node.address()}): using first 9 position only ({node.xpos} > {newxpos})')
         try:
             _, per, num, tense, mood, voice, gen, case, deg = [t for t in node.xpos]
         except ValueError:
