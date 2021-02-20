@@ -106,4 +106,16 @@
       <word id="15" form="." lemma="." postag="u--------" cite="66" relation="AuxK" head="0"/>
       <word id="16" form="[0]" insertion_id="0015e" artificial="elliptic" relation="ADV" head="12"/>
    </sentence>
+    <sentence subdoc="1.9" id="2274108" document_id="urn:cts:greekLit:tlg0012.tlg001.perseus-grc1">
+      <primary>millermo</primary>
+      <primary>tovahk</primary>
+      <secondary>nicanor</secondary>
+      <word id="1" form="Λητοῦς" lemma="Λητώ" postag="n-s---fg-" head="2" relation="ATR_CO" cite="urn:cts:greekLit:tlg0012.tlg001:1.9"/>
+      <word id="2" form="καὶ" lemma="καί" postag="c--------" head="4" relation="COORD" cite="urn:cts:greekLit:tlg0012.tlg001:1.9"/>
+      <word id="3" form="Διὸς" lemma="Ζεύς" postag="n-s---mg-" head="2" relation="ATR_CO" cite="urn:cts:greekLit:tlg0012.tlg001:1.9"/>
+      <word id="4" form="υἱός" lemma="υἱός" postag="n-s---mn-" head="6" relation="SBJ" cite="urn:cts:greekLit:tlg0012.tlg001:1.9"/>
+      <word id="5" form="·" lemma="·" postag="u--------" head="0" relation="AuxK" cite="urn:cts:greekLit:tlg0012.tlg001:1.9"/>
+      <word id="6" insertion_id="0005e" form="[0]" artificial="elliptic" head="0" relation="PRED"/>
+    </sentence>
+
 </treebank>

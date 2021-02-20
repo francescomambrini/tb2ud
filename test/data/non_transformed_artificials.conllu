@@ -1,0 +1,137 @@
+# sent_id = 1
+# text = τὰ ἄχθεα οἱ μὲν ἄνδρες ἐπὶ τῶν κεφαλέων φορέουσι, (φορέουσι) αἱ δὲ γυναῖκες ἐπὶ τῶν ὤμων.
+1	τὰ	ὁ	DET	l-p---na-	Case=Acc|Definite=Def|Gender=Neut|Number=Plur|PronType=Art	2	det	_	_
+2	ἄχθεα	ἄχθος	NOUN	n-p---na-	Case=Acc|Gender=Neut|Number=Plur	9	obj	_	_
+3	οἱ	ὁ	DET	l-p---mn-	Case=Nom|Definite=Def|Gender=Masc|Number=Plur|PronType=Art	5	det	_	_
+4	μὲν	μέν	ADV	d--------	PartType=Ptcl	9	advmod	_	_
+5	ἄνδρες	ἀνήρ	NOUN	n-p---mn-	Case=Nom|Gender=Masc|Number=Plur	9	nsubj	_	_
+6	ἐπὶ	ἐπί	ADP	r--------	_	8	case	_	_
+7	τῶν	ὁ	DET	l-p---fg-	Case=Gen|Definite=Def|Gender=Fem|Number=Plur|PronType=Art	8	det	_	_
+8	κεφαλέων	κεφαλή	NOUN	n-p---fg-	Case=Gen|Gender=Fem|Number=Plur	9	obl	_	_
+9	φορέουσι	φορέω	VERB	v3ppia---	Mood=Ind|Number=Plur|Person=3|Tense=Pres|Voice=Act	0	root	_	SpaceAfter=No
+10	,	punc1	PUNCT	u--------	_	11	punct	_	_
+11	(φορέουσι)	_	_	_	_	9	conj	_	NodeType=Artificial
+12	αἱ	ὁ	DET	l-p---fn-	Case=Nom|Definite=Def|Gender=Fem|Number=Plur|PronType=Art	14	det	_	_
+13	δὲ	δέ	ADV	d--------	PartType=Ptcl	9	cc	_	_
+14	γυναῖκες	γυνή	NOUN	n-p---fn-	Case=Nom|Gender=Fem|Number=Plur	11	nsubj	_	_
+15	ἐπὶ	ἐπί	ADP	r--------	_	17	case	_	_
+16	τῶν	ὁ	DET	l-p---mg-	Case=Gen|Definite=Def|Gender=Masc|Number=Plur|PronType=Art	17	det	_	_
+17	ὤμων	ὦμος	NOUN	n-p---mg-	Case=Gen|Gender=Masc|Number=Plur	11	obl	_	SpaceAfter=No
+18	.	punc1	PUNCT	u--------	_	9	punct	_	_
+
+# sent_id = 2
+# text = τὸ γὰρ παλαιὸν Ἄργος οὑπόθεις τόδε, τῆς οἰστροπλῆγος ἄλσος Ἰνάχου κόρης·
+1	τὸ	ὁ	DET	l-s---nn-	Case=Nom|Definite=Def|Gender=Neut|Number=Sing|PronType=Art	3	det	_	Ref=4
+2	γὰρ	γάρ	ADV	d--------	PartType=Ptcl	4	advmod	_	Ref=4
+3	παλαιὸν	παλαιός	ADJ	a-s---nn-	Case=Nom|Gender=Neut|Number=Sing	4	amod	_	Ref=4
+4	Ἄργος	Ἄργος	PROPN	n-s---nn-	Case=Nom|Gender=Neut|Number=Sing	0	root	_	Ref=4
+5	οὑπόθεις	ποθέω	VERB	v2siia---	Mood=Ind|Number=Sing|Person=2|Tense=Imp|Voice=Act	4	acl:relcl	_	Ref=4
+6	τόδε	ὅδε	PRON	p-s---nn-	Case=Nom|Gender=Neut|Number=Sing|PronType=Dem	4	nsubj	_	Ref=4|SpaceAfter=No
+7	,	,	PUNCT	u--------	_	10	punct	_	Ref=4
+8	τῆς	ὁ	DET	l-s---fg-	Case=Gen|Definite=Def|Gender=Fem|Number=Sing|PronType=Art	9	det	_	Ref=5
+9	οἰστροπλῆγος	οἰστροπλήξ	NOUN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	12	nmod	_	Ref=5
+10	ἄλσος	ἄλσος	NOUN	n-s---nn-	Case=Nom|Gender=Neut|Number=Sing	4	appos	_	Ref=5
+11	Ἰνάχου	Ἴναχος	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	12	nmod	_	Ref=5
+12	κόρης	κόρη	NOUN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	10	nmod	_	Ref=5|SpaceAfter=No
+13	·	·	PUNCT	u--------	_	4	punct	_	Ref=5
+
+# sent_id = 6
+# text = νῦν οὖν, Ὀρέστα καὶ σὺ φίλτατε ξένων Πυλάδη, τί χρὴ δρᾶν ἐν τάχει βουλευτέον·
+1	νῦν	νῦν	ADV	d--------	_	16	advmod	_	Ref=15
+2	οὖν	οὖν	ADV	d--------	PartType=Ptcl	16	advmod	_	Ref=15|SpaceAfter=No
+3	,	,	PUNCT	u--------	_	4	punct	_	Ref=15
+4	Ὀρέστα	Ὀρέστης	PROPN	n-s---mv-	Case=Voc|Gender=Masc|Number=Sing	16	vocative	_	Ref=15
+5	καὶ	καί	CCONJ	c--------	_	6	cc	_	Ref=15
+6	σὺ	σύ	PRON	p-s---mn-	Case=Nom|Gender=Masc|Number=Sing|Person=2|PronType=Prs	4	conj	_	Ref=15
+7	φίλτατε	φίλος	ADJ	a-s---mvs	Case=Voc|Degree=Sup|Gender=Masc|Number=Sing	9	amod	_	Ref=15
+8	ξένων	ξένος	NOUN	n-p---mg-	Case=Gen|Gender=Masc|Number=Plur	7	nmod	_	Ref=15
+9	Πυλάδη	Πυλάδης	PROPN	n-s---mv-	Case=Voc|Gender=Masc|Number=Sing	6	appos	_	Ref=16|SpaceAfter=No
+10	,	,	PUNCT	u--------	_	4	punct	_	Ref=16
+11	τί	τίς	PRON	p-s---na-	Case=Acc|Gender=Neut|Number=Sing|PronType=Int	13	obj	_	Ref=16
+12	χρὴ	χρή	VERB	v3spia---	Mood=Ind|Number=Sing|Person=3|Tense=Pres|Voice=Act	16	csubj	_	Ref=16
+13	δρᾶν	δράω	VERB	v--pna---	Tense=Pres|VerbForm=Inf|Voice=Act	12	csubj	_	Ref=16
+14	ἐν	ἐν	ADP	r--------	_	15	case	_	Ref=16
+15	τάχει	τάχος	NOUN	n-s---nd-	Case=Dat|Gender=Neut|Number=Sing	16	obl	_	Ref=16
+16	βουλευτέον	βουλευτέος	ADJ	a-s---nn-	Case=Nom|Gender=Neut|Number=Sing	0	root	_	Ref=16|SpaceAfter=No
+17	·	·	PUNCT	u--------	_	16	punct	_	Ref=16
+
+# sent_id = 26
+# text = ὡς κἄμ' ἐπαυχῶ τῆσδε τῆς φήμης ἄπο δεδορκότ' ἐχθροῖς [0] ἄστρον ὣς λάμψειν ἔτι.
+1	ὡς	ὡς	ADV	d--------	_	4	advmod	_	Ref=65
+2	κ	καί	ADV	c--------	_	3	advmod	_	Ref=65|SpaceAfter=No
+3	ἄμ'	ἐγώ	PRON	p-s---ma-	Case=Acc|Gender=Masc|Number=Sing|Person=1|PronType=Prs	14	nsubj	_	Ref=65
+4	ἐπαυχῶ	ἐπαυχέω	VERB	v1spia---	Mood=Ind|Number=Sing|Person=1|Tense=Pres|Voice=Act	0	root	_	Ref=65
+5	τῆσδε	ὅδε	DET	p-s---fg-	Case=Gen|Gender=Fem|Number=Sing|PronType=Dem	7	det	_	Ref=65
+6	τῆς	ὁ	DET	l-s---fg-	Case=Gen|Definite=Def|Gender=Fem|Number=Sing|PronType=Art	7	det	_	Ref=65
+7	φήμης	φήμη	NOUN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	14	obl	_	Ref=65
+8	ἄπο	ἀπό	ADP	r--------	_	7	case	_	Ref=65
+9	δεδορκότ'	δέρκομαι	VERB	v-srpama-	Case=Acc|Gender=Masc|Number=Sing|VerbForm=Part|Voice=Pass	14	advcl	_	Ref=66
+10	ἐχθροῖς	ἐχθρός	ADJ	a-p---md-	Case=Dat|Gender=Masc|Number=Plur	14	obl	_	Ref=66
+11	[0]	_	_	_	_	14	advcl	_	NodeType=Artificial
+12	ἄστρον	ἄστρον	NOUN	n-s---nn-	Case=Nom|Gender=Neut|Number=Sing	11	nsubj	_	Ref=66
+13	ὣς	ὡς	SCONJ	c--------	_	11	mark	_	Ref=66
+14	λάμψειν	λάμπω	VERB	v--fna---	Tense=Fut|VerbForm=Inf|Voice=Act	4	ccomp	_	Ref=66
+15	ἔτι	ἔτι	ADV	d--------	_	14	advmod	_	Ref=66|SpaceAfter=No
+16	.	.	PUNCT	u--------	_	4	punct	_	Ref=66
+
+# sent_id = 2274108
+# text = [0] Λητοῦς καὶ Διὸς υἱός·
+1	[0]	_	_	_	_	0	root	_	NodeType=Artificial
+2	Λητοῦς	Λητώ	PROPN	n-s---fg-	Case=Gen|Gender=Fem|Number=Sing	5	nmod	_	Ref=1.9
+3	καὶ	καί	CCONJ	c--------	_	4	cc	_	Ref=1.9
+4	Διὸς	Ζεύς	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	2	conj	_	Ref=1.9
+5	υἱός	υἱός	NOUN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	1	nsubj	_	Ref=1.9|SpaceAfter=No
+6	·	·	PUNCT	u--------	_	1	punct	_	Ref=1.9
+
+# sent_id = 2274112
+# text = παῖδα δ' ἐμοὶ λύσαιτε φίλην, τὰ δ' ἄποινα δέχεσθαι, ἁζόμενοι Διὸς υἱὸν ἑκηβόλον Ἀπόλλωνα.
+1	παῖδα	παῖς	NOUN	n-s---fa-	Case=Acc|Gender=Fem|Number=Sing	4	obj	_	Ref=1.20
+2	δ'	δέ	CCONJ	g--------	PartType=Ptcl	4	cc	_	Ref=1.20
+3	ἐμοὶ	ἐγώ	PRON	p-s---md-	Case=Dat|Gender=Masc|Number=Sing|Person=1|PronType=Prs	1	nmod	_	Ref=1.20
+4	λύσαιτε	λύω	VERB	v2paoa---	Mood=Opt|Number=Plur|Person=2|Voice=Act	0	root	_	Ref=1.20
+5	φίλην	φίλος	ADJ	a-s---fa-	Case=Acc|Gender=Fem|Number=Sing	1	amod	_	Ref=1.20|SpaceAfter=No
+6	,	,	PUNCT	u--------	_	10	punct	_	Ref=1.20
+7	τὰ	ὁ	DET	l-p---na-	Case=Acc|Definite=Def|Gender=Neut|Number=Plur|PronType=Art	9	det	_	Ref=1.20
+8	δ'	δέ	CCONJ	g--------	PartType=Ptcl	10	cc	_	Ref=1.20
+9	ἄποινα	ἄποινα	NOUN	n-p---na-	Case=Acc|Gender=Neut|Number=Plur	10	obj	_	Ref=1.20
+10	δέχεσθαι	δέχομαι	VERB	v--pne---	Tense=Pres|VerbForm=Inf|Voice=MidPass	4	conj	_	Ref=1.20|SpaceAfter=No
+11	,	,	PUNCT	u--------	_	12	punct	_	Ref=1.20
+12	ἁζόμενοι	ἅζομαι	VERB	v-pppemn-	Case=Nom|Gender=Masc|Number=Plur|Tense=Pres|VerbForm=Part|Voice=MidPass	4	advcl	_	Ref=1.21
+13	Διὸς	Ζεύς	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	14	nmod	_	Ref=1.21
+14	υἱὸν	υἱός	NOUN	n-s---ma-	Case=Acc|Gender=Masc|Number=Sing	12	obj	_	Ref=1.21
+15	ἑκηβόλον	ἑκηβόλος	ADJ	a-s---ma-	Case=Acc|Gender=Masc|Number=Sing	16	amod	_	Ref=1.21
+16	Ἀπόλλωνα	Ἀπόλλων	PROPN	n-s---ma-	Case=Acc|Gender=Masc|Number=Sing	14	appos	_	Ref=1.21|SpaceAfter=No
+17	.	.	PUNCT	u--------	_	4	punct	_	Ref=1.21
+
+# sent_id = 2274793
+# text = ἀλλά σφεας κόσμησε Ποδάρκης ὄζος Ἄρηος Ἰφίκλου υἱὸς πολυμήλου Φυλακίδαο αὐτοκασίγνητος μεγαθύμου Πρωτεσιλάου ὁπλότερος γενεῇ·
+1	ἀλλά	ἀλλά	ADV	d--------	_	3	advmod	_	Ref=2.704
+2	σφεας	σφεῖς	PRON	p-p---ma-	Case=Acc|Gender=Masc|Number=Plur|PronType=Prs	3	obj	_	Ref=2.704
+3	κόσμησε	κοσμέω	VERB	v3saia---	Mood=Ind|Number=Sing|Person=3|Tense=Past|Voice=Act	0	root	_	Ref=2.704
+4	Ποδάρκης	Ποδάρκης	PROPN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	3	nsubj	_	Ref=2.704
+5	ὄζος	ὄζος	NOUN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	4	appos	_	Ref=2.704
+6	Ἄρηος	Ἄρης	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	5	nmod	_	Ref=2.704
+7	Ἰφίκλου	Ἴφικλος	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	8	nmod	_	Ref=2.705
+8	υἱὸς	υἱός	NOUN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	4	appos	_	Ref=2.705
+9	πολυμήλου	πολύμηλος	ADJ	a-s---mg-	Case=Gen|Gender=Masc|Number=Sing	7	amod	_	Ref=2.705
+10	Φυλακίδαο	Φυλακίδης	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	7	nmod	_	Ref=2.705
+11	αὐτοκασίγνητος	αὐτοκασίγνητος	NOUN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	4	nmod	_	Ref=2.706
+12	μεγαθύμου	μεγάθυμος	ADJ	a-s---mg-	Case=Gen|Gender=Masc|Number=Sing	13	amod	_	Ref=2.706
+13	Πρωτεσιλάου	Πρωτεσίλαος	PROPN	n-s---mg-	Case=Gen|Gender=Masc|Number=Sing	11	nmod	_	Ref=2.706
+14	ὁπλότερος	ὁπλότερος	ADJ	a-s---mnc	Case=Nom|Degree=Cmp|Gender=Masc|Number=Sing	4	amod	_	Ref=2.707
+15	γενεῇ	γενεά	NOUN	n-s---fd-	Case=Dat|Gender=Fem|Number=Sing	14	obl	_	Ref=2.707|SpaceAfter=No
+16	·	·	PUNCT	u--------	_	3	punct	_	Ref=2.707
+
+# sent_id = 2274794
+# text = ὁ δ' ἅμα πρότερος καὶ ἀρείων ἥρως Πρωτεσίλαος ἀρήϊος·
+1	ὁ	ὁ	DET	l-s---mn-	Case=Nom|Definite=Def|Gender=Masc|Number=Sing|PronType=Art	8	det	_	Ref=2.707
+2	δ'	δέ	CCONJ	g--------	PartType=Ptcl	4	cc	_	Ref=2.707
+3	ἅμα	ἅμα	ADV	d--------	_	4	advmod	_	Ref=2.707
+4	πρότερος	πρότερος	ADJ	a-s---mnc	Case=Nom|Degree=Cmp|Gender=Masc|Number=Sing	0	root	_	Ref=2.707
+5	καὶ	καί	CCONJ	c--------	_	6	cc	_	Ref=2.707
+6	ἀρείων	ἀρείων	ADJ	a-s---mnc	Case=Nom|Degree=Cmp|Gender=Masc|Number=Sing	4	conj	_	Ref=2.707
+7	ἥρως	ἥρως	NOUN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	8	nmod	_	Ref=2.708
+8	Πρωτεσίλαος	Πρωτεσίλαος	PROPN	n-s---mn-	Case=Nom|Gender=Masc|Number=Sing	4	nsubj	_	Ref=2.708
+9	ἀρήϊος	ἄρειος	ADJ	a-s---mn-	Case=Nom|Gender=Masc|Number=Sing	8	amod	_	Ref=2.708|SpaceAfter=No
+10	·	·	PUNCT	u--------	_	4	punct	_	Ref=2.708
+

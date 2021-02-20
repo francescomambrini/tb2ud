@@ -1,3 +1,14 @@
+"""
+# TODO better support for transition Artificial > Empty
+should be DEPRECATED soon! It has a lot of problems.
+E.g.:
+1. duplicates some dependencies (some nodes have double deps to the empty)
+2. too much rubbish (punctuation, AuxY etc should not have deps to empty)
+3. less empty nodes should be created
+
+"""
+
+
 from udapi.core.block import Block
 from tb2ud.utils import get_first_in_priority
 import logging
@@ -88,7 +99,8 @@ def copy_to_empty(artificials, tree, heads_of_arts, children_of_arts, second_lev
             eparent = art.root
             logging.error(f"Couldn't find a parent for articial node {art.root.address},{empty.form} ({art.form})")
 
-        emap = Emptymap(empty, art.ord, (eparent, art.deprel), [(c, c.deprel) for c in children_of_arts[art]])
+        emap = Emptymap(empty, art.ord, (eparent, art.deprel), [(c, c.deprel) for c in children_of_arts[art] if
+                                                                c.misc['original_dep'] not in ['AuxX', 'AuxY']])
 
         art.remove(children='rehang')
         empty_maps.append(emap)

@@ -3,7 +3,6 @@ import logging
 from udapi.core.block import Block
 from udapi.block.agldt.agldt_util.subtrees import get_subtree_depth
 from tb2ud.utils.constructions import *
-from tb2ud.utils import get_first_in_priority
 
 # create a named tuple to map empty nodes: parent_rel is a tuple (head, deprel),
 # dep_list a list of tuples (dependent, rel)
