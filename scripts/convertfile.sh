@@ -2,14 +2,17 @@
 
 # NOTE 1: we use a LOCAL version of createupos and createfeats
 
-# NOTE 2: I now use the new TransformArtificials, instead of the old SetArtificials, for testing purposes
+# NOTE 2: In the future, I should use the new TransformArtificials,
+# instead of the old SetArtificials
+
+# Note 3: I now use the Udapi_AGLDT package; all else is now local
 
 # TODO: update createupos and createfeats when they're stable
 
 
 # set the pipeline straight
-udapy read.Agldt files="$1" \
-  agldt.SetSpaceAfter \
+udapy .udapi_agldt.read.Agldt files="$1" fix_cycles=True\
+  .SetSpaceAfter \
   .CreateUpos \
   .CreateFeats \
   .SetMember \
@@ -18,7 +21,7 @@ udapy read.Agldt files="$1" \
   .SubTreeConverter with_enhanced="True" \
   .FixObj \
   .RehangPunct \
-  .TransformArtificials \
+  .tb2ud.deprecated.SetArtificials \
   .MakeEnhanced \
   .postprocess.FixSomePos \
   .PurgeMisc \
