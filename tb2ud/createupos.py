@@ -32,6 +32,12 @@ class CreateUpos(Block):
 
     def process_node(self, node):
 
+        # sometimes a node sleeps without xpos through the reader...
+        try:
+            _ = node.xpos[0]
+        except IndexError:
+            node.xpos = 'x--------'
+
         # sometimes τε is tagged as 'd'
         if node.lemma == 'τε':
             node.xpos = 'c--------'

@@ -9,15 +9,17 @@
 
 # TODO: update createupos and createfeats when they're stable
 
+# Left .RehangPunct out between FixObj and tb2ud.deprecated.SetArtificials
 
 # set the pipeline straight
-udapy .udapi_agldt.read.Agldt files="$1" fix_cycles=True\
+#udapy .udapi_agldt.read.Glaux files="$1" fix_cycles=True\
+udapy -v .udapi_agldt.read.Agldt files="$1" fix_cycles=True\
   .SetSpaceAfter \
   .CreateUpos \
   .CreateFeats \
   .SetMember \
   .ShallowConverter \
-  .ShiftArtificials \
+  .udapi_agldt.util.ShiftArtificials \
   .SubTreeConverter with_enhanced="True" \
   .FixObj \
   .RehangPunct \
@@ -26,5 +28,5 @@ udapy .udapi_agldt.read.Agldt files="$1" fix_cycles=True\
   .postprocess.FixSomePos \
   .PurgeMisc \
   .text.UpdateText \
-  util.Eval doc='doc.meta["docname"]=doc.meta["loaded_from"][:-4]+"_TRANSFORM.conllu"' \
+  util.Eval doc='doc.meta["docname"]=doc.meta["loaded_from"][:-4]+".conllu"' \
   write.Conllu docname_as_file=1

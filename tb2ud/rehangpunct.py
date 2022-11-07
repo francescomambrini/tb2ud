@@ -14,4 +14,5 @@ class RehangPunct(FixPunct):
                         logging.warning(f'Sent {node.root.address()} has still more than 1 root!')
                 else:
                     logging.error(f"Sent {node.root.address()} does not have a root!")
+                    node.parent = node.root
         super().process_tree(tree)

@@ -60,8 +60,11 @@ class SetSpaceAfter(Block):
         if node.next_node:
             nf = node.next_node.form
             nl = node.next_node.lemma
-            if nf[0] == '-' and nl in ['δέ', 'τε']:
-                return True
+            try:
+                if nf[0] == '-' and nl in ['δέ', 'τε']:
+                    return True
+            except IndexError:
+                return False
         return False
 
 
