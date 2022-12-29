@@ -2,7 +2,8 @@ from udapi.core.block import Block
 
 
 class PurgeMisc(Block):
-    temp_misc = ['original_dep', 'AposMember', 'CoordMember', 'SharedMod', 'art_deps', 'original_ord', 'orphaned']
+    temp_misc = ['original_dep', 'AposMember', 'CoordMember', 'SharedMod', 'art_deps', 'original_ord', 'orphaned',
+                 'ToEnhanced']
 
     def process_tree(self, tree):
         """

@@ -1,7 +1,7 @@
 import logging
 
 from udapi.core.block import Block
-from tb2ud.utils.subtrees import get_subtree_depth
+from udapi_agldt.util.subtrees import get_subtree_depth
 from tb2ud.utils.constructions import *
 
 # create a named tuple to map empty nodes: parent_rel is a tuple (head, deprel),
@@ -44,6 +44,7 @@ class SubTreeConverter(Block):
             (default=False)
 
         """
+        # TODO: the flag `with_enhanced` is now redundant
         self._with_enhanced = with_enhanced
         super().__init__()
 

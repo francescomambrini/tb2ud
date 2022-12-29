@@ -47,6 +47,27 @@ conllu_string1 = '''# sent_id = 265
 18	[1]	_	_	_	_	15	nsubj	_	NodeType=Artificial|original_dep=SBJ
 '''
 
+conll_ita = '''# generator = UDPipe 2, https://lindat.mff.cuni.cz/services/udpipe
+# udpipe_model = italian-isdt-ud-2.6-200830
+# sent_id = 1
+# text = Io leggo le tragedie di Sofocle e lei di Euripide. [0] [1]
+1	Io	io	PRON	PE	Number=Sing|Person=1|PronType=Prs	2	SBJ	_	TokenRange=0:2
+2	leggo	leggere	VERB	V	Mood=Ind|Number=Sing|Person=1|Tense=Pres|VerbForm=Fin	7	PRED_CO	_	TokenRange=3:8
+3	le	il	DET	RD	Definite=Def|Gender=Fem|Number=Plur|PronType=Art	4	ATR	_	TokenRange=9:11
+4	tragedie	tragedia	NOUN	S	Gender=Fem|Number=Plur	2	OBJ	_	TokenRange=12:20
+5	di	di	ADP	E	_	4	AuxP	_	TokenRange=21:23
+6	Sofocle	Sofocle	PROPN	SP	_	5	ATR	_	TokenRange=24:31
+7	e	e	CCONJ	CC	_	0	COORD	_	TokenRange=32:33
+8	lei	lei	PRON	PE	Number=Sing|Person=3|PronType=Prs	12	SBJ	_	TokenRange=34:37
+9	di	di	ADP	E	_	13	AuxP	_	TokenRange=38:40
+10	Euripide	Euripide	PROPN	SP	_	9	ATR	_	TokenRange=41:49
+11	.	.	PUNCT	u--------	_	0	punct	_	_
+12	[0]	_	_	_	_	7	PRED_CO	_	NodeType=Artificial
+13	[1]	_	_	_	_	12	OBJ	_	NodeType=Artificial|original_dep=SBJ
+
+'''
+
+
 def main():
     doc = Document()
     doc.from_conllu_string(conllu_string1)

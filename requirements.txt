@@ -1,7 +1,5 @@
 colorama
 termcolor
-lxml
 ufal.udpipe
 pyconll
-udapi
-git+git://github.com/francescomambrini/Udapi_AGLDT.git
+git+https://github.com/francescomambrini/Udapi_AGLDT.git
